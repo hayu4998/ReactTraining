@@ -6,12 +6,43 @@ import Dispatcher from '../dispatcher/appDispatcher';
 
 const BooksActions = {
     readBooks: function(){
-        const bookList = BookApi.getAllBooks();
 
-        Dispatcher.dispatch({
-            actionType: 'read_books',
-            data: bookList
-        });
+        BookApi.getAllBooks((result)=>{
+            Dispatcher.dispatch({
+                actionType: 'read_books',
+                data: result
+            })
+        })
+    },
+
+    deleteBook: function(bookId){
+
+        BookApi.deleteBook(bookId,(result)=>{
+            Dispatcher.dispatch({
+                actionType: 'delete_book',
+                status: result
+            })
+        })
+    },
+    
+    readAuthorOfBook: function(bookId) {
+
+        BookApi.getAuthorOfBook(bookId, (result)=>{
+            Dispatcher.dispatch({
+                actionType: 'read_authors_of_book',
+                data: result
+            })
+        })
+    },
+
+    addBook: function(book) {
+        // console.log("add book action called")
+        BookApi.addBook(book,(result)=>{
+            Dispatcher.dispatch({
+                actionType: 'add_book',
+                status: result
+            })
+        })
     }
 }
 
